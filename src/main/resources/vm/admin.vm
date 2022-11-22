@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <title>View Editor Configuration</title>
+    <meta name="decorator" content="atl.admin">
+    $webResourceManager.requireResource("org.openmbee.ve.ve-confluence-app:view-editor-resources")
+  </head>
+  <body>
+    <div>
+      <h2>Add an Environment</h2>
+      <form id="add-environment" class="aui">
+        <div class="field-group">
+          <label for="id">Identifier:</label>
+          <input type="text" id="id" name="id" class="text long-field" placeholder="default">
+         </div>
+         <div class="field-group">
+           <label for="time">Viewer URI:</label>
+           <input type="text" id="viewer-uri" name="viewer-uri" class="text long-field" placeholder="https://example.com/ve/viewer.js">
+         </div>
+         <div class="field-group">
+           <input type="submit" value="Add" class="button">
+         </div>
+      </form>
+      <div id="add-environment-error-container" class="aui-message aui-message-error" style="display: none;">
+        <p class="title"><strong>Error</strong></p>
+        <p id="add-environment-error"></p>
+      </div>
+      <h2>Current Environments</h2>
+      <table id="environments" class="aui">
+        <tr>
+          <th class="identifier">Identifier</th>
+          <th class="viewer-uri">Viewer URI</th>
+          <th class="action">Actions</th>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

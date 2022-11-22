@@ -1,0 +1,48 @@
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="i18n" location="view-editor"/>
+
+    <resource type="download" name="images/" location="/images"/>
+    
+    <!-- add our web resources -->
+    <web-resource key="view-editor-resources" name="View Editor Web Resources">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        
+        <resource type="download" name="view-editor.css" location="/css/view-editor.css"/>
+        <resource type="download" name="view-editor-admin.js" location="/js/view-editor-admin.js"/>
+        <resource type="download" name="images/" location="/images"/>
+
+        <context>view-editor</context>
+    </web-resource>
+
+    <rest key="rest" name="Rest" path="/view-editor-admin" version="1.0"/>
+
+    <web-item key="conf-menu-item" name="View Editor Configuration" section="system.admin/configuration" weight="200">
+        <link linkId="view-editor-admin-link">/plugins/servlet/view-editor/admin</link>
+    </web-item>
+
+    <servlet key="admin-servlet" name="Admin Servlet" class="org.openmbee.ve.confluence.admin.AdminServlet">
+        <url-pattern>/view-editor/admin</url-pattern>
+    </servlet>
+
+    <xhtml-macro key="ve-page" name="ve-page" class="org.openmbee.ve.confluence.macro.PageMacro" icon="/download/resources/${atlassian.plugin.key}/images/pluginLogo.png">
+        <category name="external-content"/>
+        <parameters>
+            <parameter name="environment" type="string" required="false"/>
+        </parameters>
+    </xhtml-macro>
+
+    <xhtml-macro key="ve-table" name="ve-table" class="org.openmbee.ve.confluence.macro.TableMacro" icon="/download/resources/${atlassian.plugin.key}/images/pluginLogo.png">
+        <category name="external-content"/>
+        <parameters/>
+    </xhtml-macro>
+    
+</atlassian-plugin>
