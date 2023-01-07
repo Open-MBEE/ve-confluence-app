@@ -11,14 +11,20 @@
         <div class="field-group">
           <label for="id">Identifier:</label>
           <input type="text" id="id" name="id" class="text long-field" placeholder="default">
-         </div>
-         <div class="field-group">
-           <label for="time">Viewer URI:</label>
-           <input type="text" id="viewer-uri" name="viewer-uri" class="text long-field" placeholder="https://example.com/ve/viewer.js">
-         </div>
-         <div class="field-group">
-           <input type="submit" value="Add" class="button">
-         </div>
+        </div>
+        <div class="field-group">
+          <label for="viewer-uri">Viewer URI:</label>
+          <input type="text" id="viewer-uri" name="viewer-uri" class="text long-field" placeholder="https://example.com/ve/viewer.js">
+        </div>
+        <div class="field-group">
+          <label for="space-allowlist">Allowed Space(s):</label>
+          <input type="text" id="space-allowlist" name="space-allowlist" class="text long-field" placeholder="SPACE1,SPACE2">
+          <p>List of space keys, comma separated. Leave blank to allow all spaces.</p>
+        </div>
+        <br />
+        <div class="field-group">
+          <input type="submit" value="Add" class="button">
+        </div>
       </form>
       <div id="add-environment-error-container" class="aui-message aui-message-error" style="display: none;">
         <p class="title"><strong>Error</strong></p>
@@ -29,6 +35,7 @@
         <tr>
           <th class="identifier">Identifier</th>
           <th class="viewer-uri">Viewer URI</th>
+          <th class="space-allowlist">Allowed Space(s)</th>
           <th class="action">Actions</th>
         </tr>
       </table>

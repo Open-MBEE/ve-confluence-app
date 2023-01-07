@@ -12,6 +12,7 @@ import org.openmbee.ve.confluence.resource.EnvironmentResource;
 import org.openmbee.ve.confluence.resource.EnvironmentResource.Environment;
 
 import javax.inject.Inject;
+import java.util.Arrays;
 import java.util.Map;
 
 public class PageMacro implements Macro {
@@ -40,6 +41,7 @@ public class PageMacro implements Macro {
         });
         String environmentId = entry.getKey();
         Environment environment = entry.getValue();
+
         if (environment == null) {
             if (environmentId != null) {
                 return buildErrorElement(String.format(
@@ -51,6 +53,22 @@ public class PageMacro implements Macro {
                         "A View Editor environment was not specified and a default environment has not been configured. Please edit the macro and provide an environment.");
             }
         }
+
+        if (environmentId == null) {
+            environmentId = "default";
+        }
+
+        String spaceAllowlist = environment.getSpaceAllowlist();
+        if (spaceAllowlist != null && !spaceAllowlist.isEmpty()) {
+            String spaceKey = conversionContext.getSpaceKey();
+            if (Arrays.stream(spaceAllowlist.split(","))
+                    .noneMatch(spaceKey::equalsIgnoreCase)) {
+                return buildErrorElement(String.format(
+                        "The provided View Editor environment \"%s\" is not allowed for the current Confluence space \"%s\". Please edit the macro and provide an allowed environment.",
+                        environmentId, spaceKey));
+            }
+        }
+
         String viewerJsUri = environment.getViewerUri();
         if (viewerJsUri == null || viewerJsUri.isEmpty()) {
             return buildErrorElement(String.format(

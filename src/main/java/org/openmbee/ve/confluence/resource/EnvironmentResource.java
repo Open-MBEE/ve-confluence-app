@@ -102,9 +102,15 @@ public class EnvironmentResource {
             return null;
         }
 
+        String spaceAllowlist = (String) settings.get(BASE_NAMESPACE + ".environment." + environmentId + ".space-allowlist");
+        if (spaceAllowlist == null) {
+            return null;
+        }
+
         Environment result = new Environment();
         result.setId(environmentId);
         result.setViewerUri(viewerJsUri);
+        result.setSpaceAllowlist(spaceAllowlist);
         return result;
     }
 
@@ -129,6 +135,7 @@ public class EnvironmentResource {
             boolean removed = ids.remove(environmentId);
             if (removed) {
                 settings.remove(BASE_NAMESPACE + ".environment." + environmentId + ".viewer-uri");
+                settings.remove(BASE_NAMESPACE + ".environment." + environmentId + ".space-allowlist");
                 environments(ids, settings);
             }
             return null;
@@ -161,6 +168,8 @@ public class EnvironmentResource {
         if (viewerUri == null || viewerUri.isEmpty()) {
             return Response.status(Status.BAD_REQUEST).entity(buildError("Viewer URI must be provided.")).build();
         }
+        String _spaceAllowlist = environment.getSpaceAllowlist();
+        String spaceAllowlist = _spaceAllowlist != null && !_spaceAllowlist.isEmpty() ? _spaceAllowlist : "";
 
         transactionTemplate.execute(() -> {
             PluginSettings settings = pluginSettingsFactory.createGlobalSettings();
@@ -178,6 +187,7 @@ public class EnvironmentResource {
                 environments(environmentList, settings);
             }
             settings.put(BASE_NAMESPACE + ".environment." + environmentId + ".viewer-uri", viewerUri);
+            settings.put(BASE_NAMESPACE + ".environment." + environmentId + ".space-allowlist", spaceAllowlist);
             return null;
         });
 
@@ -206,6 +216,8 @@ public class EnvironmentResource {
         private String id;
         @XmlElement
         private String viewerUri;
+        @XmlElement
+        private String spaceAllowlist;
 
         public String getId() {
             return id;
@@ -221,6 +233,14 @@ public class EnvironmentResource {
 
         public void setViewerUri(String viewerUri) {
             this.viewerUri = viewerUri;
+        }
+
+        public String getSpaceAllowlist() {
+            return spaceAllowlist;
+        }
+
+        public void setSpaceAllowlist(String spaceAllowlist) {
+            this.spaceAllowlist = spaceAllowlist;
         }
     }
 

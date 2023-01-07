@@ -9,11 +9,12 @@
         }).done(function(environments) {
             var table = $("#environments");
             environments.forEach(function(environment) {
-              var row = $("<tr><td class=\"identifier\"></td><td class=\"viewer-uri\"></td><td class=\"action\"><form class=\"delete-environment\"><input type=\"submit\" name=\"delete\" value=\"Delete\"></td></tr>");
+              var row = $("<tr><td class=\"identifier\"></td><td class=\"viewer-uri\"></td><td class=\"space-allowlist\">asdf</td><td class=\"action\"><form class=\"delete-environment\"><input type=\"submit\" name=\"delete\" value=\"Delete\"></td></tr>");
 
               row.find(".identifier").text(environment.id);
               row.find(".viewer-uri").text(environment.viewerUri);
-              row.find(".environment-id").val(environment.id);
+              console.log(environment.spaceAllowlist);
+              row.find(".space-allowlist").text(environment.spaceAllowlist);
               row.find(".delete-environment").on("submit", function(e) {
                   e.preventDefault();
                   $.ajax({
@@ -56,7 +57,11 @@
               dataType: "json",
               type: "PUT",
               contentType: "application/json",
-              data: JSON.stringify({ id: $("#id").val(), viewerUri: $("#viewer-uri").val() }),
+              data: JSON.stringify({
+                  id: $("#id").val(),
+                  viewerUri: $("#viewer-uri").val(),
+                  spaceAllowlist: $("#space-allowlist").val(),
+              }),
               processData: false
           }).done(function(environment, textStatus, jqXHR) {
               location.reload(true);

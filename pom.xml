@@ -161,6 +161,7 @@
                         <!-- Ensure plugin is spring powered -->
                         <Spring-Context>*</Spring-Context>
                     </instructions>
+                    <allowGoogleTracking>false</allowGoogleTracking>
                 </configuration>
             </plugin>
             <plugin>
@@ -181,12 +182,11 @@
             </plugin>
         </plugins>
     </build>
-
     <properties>
         <platform.version>5.0.0</platform.version>
-        <confluence.version>6.14.0</confluence.version>
-        <confluence.data.version>6.14.0</confluence.data.version>
-        <amps.version>8.1.2</amps.version>
+        <confluence.version>6.14.3</confluence.version>
+        <confluence.data.version>6.14.3</confluence.data.version>
+        <amps.version>8.9.0</amps.version>
         <plugin.testrunner.version>2.0.2</plugin.testrunner.version>
         <atlassian.spring.scanner.version>2.1.7</atlassian.spring.scanner.version>
         <!-- This property ensures consistency between the key in atlassian-plugin.xml and the OSGi bundle's key. -->
